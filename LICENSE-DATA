@@ -1,0 +1,25 @@
+ACID-Bench data license
+
+Copyright (c) 2026 Andrei Vince
+
+The following data in this repository is licensed under the Creative Commons
+Attribution 4.0 International License (CC BY 4.0):
+
+  - scenarios/ (the 52 scenario contracts)
+  - artifacts/ (row evidence, trace samples and derived tables)
+  - data/ (derived corrected labels)
+  - configs/task_overlays/ (task overlay set)
+
+Legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+Summary:    https://creativecommons.org/licenses/by/4.0/
+
+Attribution: cite "ACID-Bench: Fault-Injection Contracts for State-Changing
+Tool Agents" (Andrei Vince, AIMLSystems 2026), as given in CITATION.cff.
+
+The scenario contracts are built on the Tau-Bench retail and airline
+environments (MIT, see THIRD_PARTY_NOTICES.md). The agent turns inside the
+traces are outputs of third-party models and are also subject to each model
+provider's terms (see THIRD_PARTY_NOTICES.md).
+
+All code (acid_bench/, scripts/ and the rest of the repository not listed above)
+is licensed under the MIT License in LICENSE.

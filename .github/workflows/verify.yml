@@ -1,0 +1,52 @@
+name: verify
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Release boundary check
+        run: python3 scripts/check_release_boundary.py
+
+      - name: Verify the frozen artifact (no provider or network calls)
+        run: python3 -m acid_bench verify-artifact
+
+      - name: Evaluator copies are identical
+        run: cmp acid_bench/assertions.py acid_bench/assertions_v1.py
+
+      - name: Derived corrected labels match the frozen rows
+        run: python3 scripts/build_corrected_labels.py --check
+
+      - name: Deterministic artifact ZIP (two builds, identical bytes)
+        run: |
+          python3 scripts/package_controlled_artifact.py --output "$RUNNER_TEMP/a/artifact.zip" > "$RUNNER_TEMP/build-a.json"
+          python3 scripts/package_controlled_artifact.py --output "$RUNNER_TEMP/b/artifact.zip" > "$RUNNER_TEMP/build-b.json"
+          cmp "$RUNNER_TEMP/a/artifact.zip" "$RUNNER_TEMP/b/artifact.zip"
+          sha256sum "$RUNNER_TEMP/a/artifact.zip"
+
+      - name: Verify inside a clean extraction
+        run: |
+          mkdir "$RUNNER_TEMP/extract"
+          cd "$RUNNER_TEMP/extract"
+          python3 -c "import zipfile, sys; zipfile.ZipFile(sys.argv[1]).extractall('.')" "$RUNNER_TEMP/a/artifact.zip"
+          python3 -c "import acid_bench, pathlib; root = pathlib.Path.cwd().resolve(); assert pathlib.Path(acid_bench.__file__).resolve().is_relative_to(root), acid_bench.__file__; print(root)"
+          python3 -m acid_bench verify-artifact > "$RUNNER_TEMP/verify.json"
+          python3 -c "import json, os; d = json.load(open(os.path.join(os.environ['RUNNER_TEMP'], 'verify.json'))); print(d['root'], d['summary']); assert d['ok'] and d['summary']['package_file_mismatch_count'] == 0"
+
+      - name: Reconstruct the pinned Tau runtime from the bundle
+        run: python3 scripts/bootstrap_tau_bench.py --tau-root "$RUNNER_TEMP/tau-bench"

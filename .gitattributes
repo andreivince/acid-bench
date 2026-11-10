@@ -1,0 +1,13 @@
+# Keep runtime source and manifests stable across checkout platforms.
+acid_bench/*.py text eol=lf
+scripts/*.py text eol=lf
+configs/** text eol=lf
+requirements-publication.txt text eol=lf
+
+# Frozen evidence and reconstruction inputs are identified by their exact bytes.
+artifacts/** -text
+vendor/** -text
+vendor/tau-bench-publication.bundle binary
+artifacts/row-evidence/validation/invalid-warning-taxonomy.csv whitespace=cr-at-eol
+# Blank context lines in this hashed unified diff must retain their leading space.
+vendor/tau-bench-publication-working-tree.patch -whitespace

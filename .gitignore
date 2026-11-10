@@ -1,0 +1,52 @@
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+credentials*.json
+*token*.txt
+.netrc
+
+# Release working notes (kept out of the public tree)
+.release/
+
+# Python environments, builds and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+/build/
+/dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Reconstructed runtime and large raw outputs
+/tau-bench/
+/traces/
+/results/
+/acid_traces/
+*.log
+
+# Local notes and scratch
+/notes/
+/scratch/
+/tmp/
+local_*/
+*.local.*
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
