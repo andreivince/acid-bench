@@ -11,6 +11,7 @@ authors:
     given-names: "Andrei"
     affiliation: "University of North Carolina at Charlotte"
 license: MIT
+doi: "10.5281/zenodo.24168719"
 repository-code: "https://github.com/andreivince/acid-bench"
 abstract: >-
   The official artifact and reference implementation of the ACID-Bench paper:

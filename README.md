@@ -4,6 +4,8 @@ This repository is the official artifact and reference implementation of the pap
 
 Project site: https://acid-bench.vercel.app
 
+Archived release (Zenodo): https://doi.org/10.5281/zenodo.24168719 (this DOI always resolves to the latest version; release 1.0.0 is https://doi.org/10.5281/zenodo.24168720). Recorded runs: https://huggingface.co/datasets/andreivince/acid-bench-traces
+
 ACID-Bench is built on [Tau-Bench](https://github.com/sierra-research/tau-bench) by Sierra (MIT License, Copyright 2024 Sierra). It reuses Tau-Bench's retail and airline environments at a pinned commit; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## What it is
